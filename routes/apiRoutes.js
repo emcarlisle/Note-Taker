@@ -17,11 +17,13 @@ module.exports = function(app) {
         } else {
             newNote.id = 0;
         }
+        var noteString = JSON.stringify(newNote);
+        fs.writeFile("db/db.json", noteString, function (err) {
+          if (err) throw err;
+          console.log("Note Sent!");
+        });
     });
-    var noteString = JSON.stringify(newNote);
-    fs.writeFile("db/db.json", noteString, function(err) {
-        if (err) throw err;
-        console.log("Note Sent!");
-    });
+
+    
 
 };
