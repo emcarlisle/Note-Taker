@@ -4,26 +4,31 @@ var fs = require("fs");
 
 module.exports = function(app) {
     app.get("/api/notes", function(req, res) {
-        res.json(note);
         console.log("Got notes!");
+        return res.json(note);
+        
     });
 
     app.post("/api/notes", function(req, res) {
         var newNote = req.body;
         // Unique ID for new note
-        if (!note === undefined || !note.length === 0) {
-            newNote.id = note.length;
+        if (note === "") {
+            newNote.id = 0;
 
         } else {
-            newNote.id = 0;
+            newNote.id = note.length;
         }
-        var noteString = JSON.stringify(newNote);
+        note.push(newNote);
+        var noteString = JSON.stringify(note);
         fs.writeFile("db/db.json", noteString, function (err) {
           if (err) throw err;
           console.log("Note Sent!");
+
         });
     });
 
     
 
 };
+
+// npm uuid, version 1 or version 4, require uuid, import, call that function thatll create a string, as a dependency
