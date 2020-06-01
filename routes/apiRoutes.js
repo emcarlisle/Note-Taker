@@ -24,17 +24,23 @@ module.exports = function(app) {
           if (err) throw err;
           console.log("Note Sent!");
           res.send();
-            
         });
     });
+            
     // req.params.id
     app.delete("/api/notes/:id", function(req, res){
         var deleteNote = req.params.id;
         // delete from array
         // note.(method to delete from array)
-        // writeFile/stringify
-        console.log(deleteNote);
-    })
+        note.splice(0, 1);
+        fs.writeFile("db/db.json", JSON.stringify(note), (err) => {
+            if (err) throw err;
+            console.log(deleteNote);
+            res.send();
+        });
+        
+        
+    });
 
     // rearrange the notes, slack
 };
