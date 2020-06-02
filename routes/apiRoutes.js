@@ -31,13 +31,11 @@ module.exports = function(app) {
     app.delete("/api/notes/:id", function(req, res) {
         let deleteNote = (req.params.id);
         note.splice(deleteNote, 1);
-
-        //let deletedNotes = [];
-        //for (let i = 0; i < note.length; i++) {
-        //    if (note[i].id != deleteNote) {
-        //        deletedNotes.push(deleteNote)
-        //    }
-        //}
+        if (!note === undefined || !note.length == 0) {
+                for (let i = 0; i < note.length; i++) {
+                    note[i].id = i;
+                };
+            };
         fs.writeFile("db/db.json", JSON.stringify(note), (err) => {
             if (err) throw err;
             console.log("Note #" + deleteNote + " deleted");
@@ -47,7 +45,7 @@ module.exports = function(app) {
         
     });
 
-    // rearrange the notes, slack
+    
 };
 
 // npm uuid, version 1 or version 4, require uuid, import, call that function thatll create a string, as a dependency
