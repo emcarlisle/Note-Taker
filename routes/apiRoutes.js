@@ -1,5 +1,5 @@
-var note = require("../db/db");
-var fs = require("fs");
+const note = require("../db/db");
+const fs = require("fs");
 
 
 module.exports = function(app) {
@@ -10,7 +10,7 @@ module.exports = function(app) {
     });
 
     app.post("/api/notes", function(req, res) {
-        var newNote = req.body;
+        let newNote = req.body;
         // Unique ID for new note
         if (note === "") {
             newNote.id = 0;
@@ -28,14 +28,19 @@ module.exports = function(app) {
     });
             
     // req.params.id
-    app.delete("/api/notes/:id", function(req, res){
-        var deleteNote = req.params.id;
-        // delete from array
-        // note.(method to delete from array)
-        note.splice(0, 1);
+    app.delete("/api/notes/:id", function(req, res) {
+        let deleteNote = (req.params.id);
+        note.splice(deleteNote, 1);
+
+        //let deletedNotes = [];
+        //for (let i = 0; i < note.length; i++) {
+        //    if (note[i].id != deleteNote) {
+        //        deletedNotes.push(deleteNote)
+        //    }
+        //}
         fs.writeFile("db/db.json", JSON.stringify(note), (err) => {
             if (err) throw err;
-            console.log(deleteNote);
+            console.log("Note #" + deleteNote + " deleted");
             res.send();
         });
         
