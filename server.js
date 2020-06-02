@@ -14,7 +14,3 @@ require("./routes/htmlRoutes")(app);
 app.listen(PORT, function() {
     console.log("App listening on PORT: " + PORT);
   });
-
-
-// * -- catch all, sends back to "home" page, put it at the 
-// of the code 

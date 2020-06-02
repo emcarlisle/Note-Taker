@@ -2,13 +2,14 @@ const note = require("../db/db");
 const fs = require("fs");
 
 
-module.exports = function(app) {
+module.exports = function (app) {
+    // GET
     app.get("/api/notes", function(req, res) {
         console.log("Got notes!");
         return res.json(note);
         
     });
-
+    // POST
     app.post("/api/notes", function(req, res) {
         let newNote = req.body;
         // Unique ID for new note
@@ -22,12 +23,13 @@ module.exports = function(app) {
         var noteString = JSON.stringify(note);
         fs.writeFile("db/db.json", noteString, function (err) {
           if (err) throw err;
-          console.log("Note Sent!");
+            console.log("Note Sent!");
+            // render new note
           res.send();
         });
     });
             
-    // req.params.id
+    // DELETE
     app.delete("/api/notes/:id", function(req, res) {
         let deleteNote = (req.params.id);
         note.splice(deleteNote, 1);
@@ -47,5 +49,3 @@ module.exports = function(app) {
 
     
 };
-
-// npm uuid, version 1 or version 4, require uuid, import, call that function thatll create a string, as a dependency
